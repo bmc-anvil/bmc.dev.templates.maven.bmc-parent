@@ -1,4 +1,7 @@
-# bmc-bom
+# bmc.dev-templates.maven-bmc.parent
+BMC - BOM and Build System Parent for children BOMs
+
+# bmc-anvil maven parent
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
