@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.bmc.dev</groupId>
-    <artifactId>bmc-maven-parent</artifactId>
+    <groupId>bmc.dev.templates.maven</groupId>
+    <artifactId>bmc_parent</artifactId>
     <version>0.0.1-local</version>
     <packaging>pom</packaging>
 
@@ -78,7 +78,7 @@
         <github.packages.id>github</github.packages.id>
         <github.packages.name>GitHub Packages</github.packages.name>
         <github.packages.base-url>https://maven.pkg.github.com</github.packages.base-url>
-        <github.repository>${project.artifactId}</github.repository>
+        <github.repository>${project.groupId}.${project.artifactId}</github.repository>
 
         <!-- Java / Maven Configuration  -->
         <maven.compiler.parameters>true</maven.compiler.parameters>
@@ -89,15 +89,15 @@
 
         <!-- Plugins Versions  -->
         <checkstyle-plugin.version>3.6.0</checkstyle-plugin.version>
-        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <dependency-plugin.version>3.8.1</dependency-plugin.version>
-        <deploy-plugin.version>3.1.3</deploy-plugin.version>
+        <deploy-plugin.version>3.1.4</deploy-plugin.version>
         <enforcer-plugin.version>3.6.1</enforcer-plugin.version>
         <failsafe-plugin.version>3.5.3</failsafe-plugin.version>
         <jar-plugin.version>3.4.2</jar-plugin.version>
         <javadoc-plugin.version>3.11.2</javadoc-plugin.version>
         <resources-plugin.version>3.3.1</resources-plugin.version>
-        <source-plugin.version>3.2.1</source-plugin.version>
+        <source-plugin.version>3.3.1</source-plugin.version>
         <surefire-plugin.version>${failsafe-plugin.version}</surefire-plugin.version>
 
         <!-- Versions -->

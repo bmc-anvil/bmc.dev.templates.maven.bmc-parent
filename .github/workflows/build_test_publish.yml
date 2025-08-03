@@ -27,4 +27,3 @@ jobs:
         with:
             tag_or_hash: ${{ inputs.tag_or_hash }}
             deploy_package: true
-            checkstyle_skip: true
