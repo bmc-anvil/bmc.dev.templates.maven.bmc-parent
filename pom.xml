@@ -82,7 +82,6 @@
 
         <!-- Java / Maven Configuration  -->
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <!-- Use compiler.release and not compiler.source / compiler.target as those last 2 properties are legacy for pre java 9+  -->
         <maven.compiler.release>24</maven.compiler.release>
         <maven.compiler.proc>full</maven.compiler.proc>
         <maven.min.version>3.9.9</maven.min.version>
@@ -101,7 +100,7 @@
         <surefire-plugin.version>${failsafe-plugin.version}</surefire-plugin.version>
 
         <!-- Versions -->
-        <checkstyle.version>10.26.1</checkstyle.version>
+        <checkstyle.version>11.0.0</checkstyle.version>
     </properties>
 
     <!--
