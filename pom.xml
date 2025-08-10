@@ -64,9 +64,9 @@
     <properties>
         <!-- Keep properties in alphabetical order  -->
         <!-- BMC Config and Versions -->
-        <bmc-resources.groupId>com.bmc.platform</bmc-resources.groupId>
+        <bmc-resources.groupId>bmc.dev.resources.code</bmc-resources.groupId>
         <bmc-resources.artifact>bmc-code-style</bmc-resources.artifact>
-        <bmc-resources.version>0.3.1-experimental</bmc-resources.version>
+        <bmc-resources.version>1.0.0</bmc-resources.version>
 
         <!-- Configuration  -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
