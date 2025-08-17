@@ -193,7 +193,7 @@
                                         <version>${bmc-resources.version}</version>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.basedir}</outputDirectory>
-                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,LICENSE,mvnw,.mvn/**</includes>
+                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,mvnw,.mvn/**</includes>
                                     </artifactItem>
                                     <artifactItem>
                                         <groupId>${bmc-resources.groupId}</groupId>
@@ -201,7 +201,7 @@
                                         <version>${bmc-resources.version}</version>
                                         <overWrite>false</overWrite>
                                         <outputDirectory>${project.basedir}</outputDirectory>
-                                        <includes>.github/**</includes>
+                                        <includes>LICENSE,.github/**</includes>
                                     </artifactItem>
                                 </artifactItems>
                             </configuration>
