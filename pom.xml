@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>bmc.dev.templates.maven</groupId>
@@ -181,7 +181,7 @@
                     <executions>
                         <execution>
                             <id>unpack</id>
-                            <phase>generate-sources</phase>
+                            <phase>generate-resources</phase>
                             <goals>
                                 <goal>unpack</goal>
                             </goals>
@@ -191,17 +191,8 @@
                                         <groupId>${bmc-resources.groupId}</groupId>
                                         <artifactId>${bmc-resources.artifact}</artifactId>
                                         <version>${bmc-resources.version}</version>
-                                        <overWrite>true</overWrite>
-                                        <outputDirectory>${project.basedir}</outputDirectory>
-                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,mvnw,.mvn/**</includes>
-                                    </artifactItem>
-                                    <artifactItem>
-                                        <groupId>${bmc-resources.groupId}</groupId>
-                                        <artifactId>${bmc-resources.artifact}</artifactId>
-                                        <version>${bmc-resources.version}</version>
-                                        <overWrite>false</overWrite>
-                                        <outputDirectory>${project.basedir}</outputDirectory>
-                                        <includes>LICENSE,.github/**</includes>
+                                        <outputDirectory>${project.build.directory}/bmc-resources-unpack</outputDirectory>
+                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,LICENSE,mvnw,.github/**,.mvn/**</includes>
                                     </artifactItem>
                                 </artifactItems>
                             </configuration>
@@ -319,6 +310,53 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${resources-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>bmc-resources-without-overwrite</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.basedir}</outputDirectory>
+                                <overwrite>false</overwrite>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
+                                        <includes>
+                                            <include>LICENSE</include>
+                                            <include>.dockerignore</include>
+                                            <include>.github/**</include>
+                                            <include>.mvn/*</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>bmc-resources-with-overwrite</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.basedir}</outputDirectory>
+                                <overwrite>true</overwrite>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
+                                        <includes>
+                                            <include>.editorconfig</include>
+                                            <include>.gitignore</include>
+                                            <include>checkstyle.xml</include>
+                                            <include>.mvn/wrapper/*</include>
+                                            <include>mvnw</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -365,6 +403,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
