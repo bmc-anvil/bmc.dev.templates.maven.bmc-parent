@@ -199,7 +199,7 @@
                                         <groupId>${bmc-resources.groupId}</groupId>
                                         <artifactId>${bmc-resources.artifact}</artifactId>
                                         <version>${bmc-resources.version}</version>
-                                        <overWrite>true</overWrite>
+                                        <overWrite>false</overWrite>
                                         <outputDirectory>${project.basedir}</outputDirectory>
                                         <includes>.github/**</includes>
                                     </artifactItem>
