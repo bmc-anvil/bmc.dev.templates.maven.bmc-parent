@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>bmc.dev.templates.maven</groupId>
@@ -312,7 +312,7 @@
                     <version>${resources-plugin.version}</version>
                     <executions>
                         <execution>
-                            <id>bmc-resources-without-overwrite</id>
+                            <id>bmc-resources-without-overwrite-common</id>
                             <phase>process-resources</phase>
                             <goals>
                                 <goal>copy-resources</goal>
@@ -326,7 +326,6 @@
                                         <includes>
                                             <include>LICENSE</include>
                                             <include>.dockerignore</include>
-                                            <include>.github/**</include>
                                             <include>.mvn/*</include>
                                         </includes>
                                     </resource>
@@ -334,7 +333,26 @@
                             </configuration>
                         </execution>
                         <execution>
-                            <id>bmc-resources-with-overwrite</id>
+                            <id>bmc-resources-without-overwrite-parents</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.basedir}</outputDirectory>
+                                <overwrite>false</overwrite>
+                                <resources>
+                                    <resource>
+                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
+                                        <includes>
+                                            <include>.github/**</include>
+                                        </includes>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>bmc-resources-with-overwrite-common</id>
                             <phase>generate-resources</phase>
                             <goals>
                                 <goal>copy-resources</goal>
