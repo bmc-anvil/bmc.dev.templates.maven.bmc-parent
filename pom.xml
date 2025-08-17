@@ -5,7 +5,7 @@
 
     <groupId>bmc.dev.templates.maven</groupId>
     <artifactId>bmc-parent</artifactId>
-    <version>0.0.1-local</version>
+    <version>bmc-local</version>
     <packaging>pom</packaging>
 
     <name>BMC - Common Maven Parent POM</name>
@@ -26,13 +26,18 @@
          Parts of the project anyone will be able to be incorporated on closed-source code without sharing your own code nor adopting a copy-left
          license. (Apache License v2 / other?)
          Other parts will be licenced so you can also use them at will but MUST still be FOSS, and you need to reshare your modifications and keep
-         the code available. (GPL v2 / other?)
+         the code available. (LGPL v3 / other?)
          Licensing may / will change at any time, with no notice.
      -->
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>GNU Lesser General Public License, Version 3.0</name>
+            <url>https://www.gnu.de/documents/lgpl-3.0.en.html</url>
             <distribution>repo</distribution>
         </license>
         <license>
@@ -66,7 +71,7 @@
         <!-- BMC Config and Versions -->
         <bmc-resources.groupId>bmc.dev.resources.code</bmc-resources.groupId>
         <bmc-resources.artifact>bmc-resources</bmc-resources.artifact>
-        <bmc-resources.version>1.0.0</bmc-resources.version>
+        <bmc-resources.version>1.2.0</bmc-resources.version>
 
         <!-- Configuration  -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -188,7 +193,15 @@
                                         <version>${bmc-resources.version}</version>
                                         <overWrite>true</overWrite>
                                         <outputDirectory>${project.basedir}</outputDirectory>
-                                        <includes>**\/*.editorconfig,**\/*.gitignore,**\/*.dockerignore,**\/checkstyle.xml</includes>
+                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,LICENSE,mvnw,.mvn/**</includes>
+                                    </artifactItem>
+                                    <artifactItem>
+                                        <groupId>${bmc-resources.groupId}</groupId>
+                                        <artifactId>${bmc-resources.artifact}</artifactId>
+                                        <version>${bmc-resources.version}</version>
+                                        <overWrite>true</overWrite>
+                                        <outputDirectory>${project.basedir}</outputDirectory>
+                                        <includes>.github/**</includes>
                                     </artifactItem>
                                 </artifactItems>
                             </configuration>
@@ -324,7 +337,6 @@
                         <attach>true</attach>
                     </configuration>
                 </plugin>
-
             </plugins>
         </pluginManagement>
 
