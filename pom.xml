@@ -87,7 +87,7 @@
 
         <!-- Java / Maven Configuration  -->
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release>
         <maven.compiler.proc>full</maven.compiler.proc>
         <maven.min.version>3.9.9</maven.min.version>
 
