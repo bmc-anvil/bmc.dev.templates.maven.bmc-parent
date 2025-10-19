@@ -8,7 +8,7 @@
     <version>bmc-local</version>
     <packaging>pom</packaging>
 
-    <name>BMC - Common Maven Parent POM</name>
+    <name>BMC - BMC Maven Core Parent POM</name>
     <description>
         BMC - BOM and Build System Parent for children BOMs. Can be used as a common build system for any framework. Children BOMs using this project
         as their parent can specify Quarkus, Micronaut, Spring, etc. dependencies and all align to build and quality standards using a framework
@@ -61,17 +61,13 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/${github.org}/${github.repository}.git</connection>
-        <developerConnection>scm:git:ssh://github.com:${github.org}/${github.repository}.git</developerConnection>
+        <connection>${github.scm}/${github.org}/${github.repository}.git</connection>
+        <developerConnection>${github.scm}/${github.org}/${github.repository}.git</developerConnection>
         <url>${project.url}</url>
     </scm>
 
     <properties>
         <!-- Keep properties in alphabetical order  -->
-        <!-- BMC Config and Versions -->
-        <bmc-resources.groupId>bmc.dev.resources.code</bmc-resources.groupId>
-        <bmc-resources.artifact>bmc-resources</bmc-resources.artifact>
-        <bmc-resources.version>1.2.0</bmc-resources.version>
 
         <!-- Configuration  -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,6 +75,7 @@
         <skipITs>true</skipITs>
 
         <!-- GitHub Repositories -->
+        <github.scm>scm:git:https://github.com</github.scm>
         <github.org>bmc-anvil</github.org>
         <github.packages.id>github</github.packages.id>
         <github.packages.name>GitHub Packages</github.packages.name>
@@ -92,20 +89,21 @@
         <maven.min.version>3.9.9</maven.min.version>
 
         <!-- Plugins Versions  -->
-        <checkstyle-plugin.version>3.6.0</checkstyle-plugin.version>
-        <compiler-plugin.version>3.14.0</compiler-plugin.version>
-        <dependency-plugin.version>3.8.1</dependency-plugin.version>
-        <deploy-plugin.version>3.1.4</deploy-plugin.version>
-        <enforcer-plugin.version>3.6.1</enforcer-plugin.version>
-        <failsafe-plugin.version>3.5.3</failsafe-plugin.version>
-        <jar-plugin.version>3.4.2</jar-plugin.version>
-        <javadoc-plugin.version>3.11.2</javadoc-plugin.version>
-        <resources-plugin.version>3.3.1</resources-plugin.version>
-        <source-plugin.version>3.3.1</source-plugin.version>
-        <surefire-plugin.version>${failsafe-plugin.version}</surefire-plugin.version>
+        <plugin.bmc.resources>0.1.0</plugin.bmc.resources>
+        <plugin.checkstyle.version>3.6.0</plugin.checkstyle.version>
+        <plugin.maven.compiler.version>3.14.0</plugin.maven.compiler.version>
+        <plugin.maven.dependency.version>3.9.0</plugin.maven.dependency.version>
+        <plugin.maven.deploy.version>3.1.4</plugin.maven.deploy.version>
+        <plugin.maven.enforcer.version>3.6.2</plugin.maven.enforcer.version>
+        <plugin.maven.failsafe.version>3.5.4</plugin.maven.failsafe.version>
+        <plugin.maven.jar.version>3.4.2</plugin.maven.jar.version>
+        <plugin.maven.javadoc.version>3.12.0</plugin.maven.javadoc.version>
+        <plugin.maven.resources.version>3.3.1</plugin.maven.resources.version>
+        <plugin.maven.source.version>3.3.1</plugin.maven.source.version>
+        <plugin.maven.surefire.version>${plugin.maven.failsafe.version}</plugin.maven.surefire.version>
 
         <!-- Versions -->
-        <checkstyle.version>11.0.0</checkstyle.version>
+        <checkstyle.version>12.1.0</checkstyle.version>
     </properties>
 
     <!--
@@ -138,11 +136,43 @@
         -->
         <pluginManagement>
             <plugins>
+                <!-- BMC build Plugins -->
+                <plugin>
+                    <groupId>bmc.dev.resources.code</groupId>
+                    <artifactId>bmc-resources</artifactId>
+                    <version>${plugin.bmc.resources}</version>
+                    <executions>
+                        <execution>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <!--
+                        All configuration options described here even if null as some sort of "doc in/with code".
+                     -->
+                    <configuration>
+                        <generalConfig>
+                            <skip/>
+                        </generalConfig>
+                        <architecture>
+                            <mainReadme/>
+                            <model/>
+                            <skip>true</skip>
+                            <skipReadme/>
+                        </architecture>
+                        <resources>
+                            <overwriteUserResources/>
+                            <skip>false</skip>
+                        </resources>
+                    </configuration>
+                </plugin>
                 <!-- Apache Maven build Plugins -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>${checkstyle-plugin.version}</version>
+                    <version>${plugin.checkstyle.version}</version>
                     <dependencies>
                         <!-- use latest checkstyle version-->
                         <dependency>
@@ -166,7 +196,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${compiler-plugin.version}</version>
+                    <version>${plugin.maven.compiler.version}</version>
                     <!--
                         Java >=23 requires explicit configuration of annotation processing.
                         Add the proper configuration to children of this parent POM.
@@ -176,33 +206,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${dependency-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>unpack</id>
-                            <phase>generate-resources</phase>
-                            <goals>
-                                <goal>unpack</goal>
-                            </goals>
-                            <configuration>
-                                <artifactItems>
-                                    <artifactItem>
-                                        <groupId>${bmc-resources.groupId}</groupId>
-                                        <artifactId>${bmc-resources.artifact}</artifactId>
-                                        <version>${bmc-resources.version}</version>
-                                        <outputDirectory>${project.build.directory}/bmc-resources-unpack</outputDirectory>
-                                        <includes>.editorconfig,.gitignore,.dockerignore,checkstyle.xml,LICENSE,mvnw,.github/**,.mvn/**</includes>
-                                    </artifactItem>
-                                </artifactItems>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${deploy-plugin.version}</version>
+                    <version>${plugin.maven.deploy.version}</version>
                     <configuration>
                         <deployAtEnd>true</deployAtEnd>
                     </configuration>
@@ -210,7 +215,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${enforcer-plugin.version}</version>
+                    <version>${plugin.maven.enforcer.version}</version>
                     <executions>
                         <execution>
                             <id>enforce</id>
@@ -249,7 +254,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${failsafe-plugin.version}</version>
+                    <version>${plugin.maven.failsafe.version}</version>
                     <executions>
                         <execution>
                             <goals>
@@ -269,12 +274,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>${jar-plugin.version}</version>
+                    <version>${plugin.maven.jar.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${javadoc-plugin.version}</version>
+                    <version>${plugin.maven.javadoc.version}</version>
                     <configuration>
                         <release>${maven.compiler.release}</release>
                         <doclint>none</doclint>
@@ -297,7 +302,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${surefire-plugin.version}</version>
+                    <version>${plugin.maven.surefire.version}</version>
                     <configuration>
                         <systemPropertyVariables>
                             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
@@ -308,78 +313,8 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${resources-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>bmc-resources-without-overwrite-common</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.basedir}</outputDirectory>
-                                <overwrite>false</overwrite>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
-                                        <includes>
-                                            <include>LICENSE</include>
-                                            <include>.dockerignore</include>
-                                            <include>.mvn/*</include>
-                                        </includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>bmc-resources-without-overwrite-parents</id>
-                            <phase>process-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.basedir}</outputDirectory>
-                                <overwrite>false</overwrite>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
-                                        <includes>
-                                            <include>.github/**</include>
-                                        </includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>bmc-resources-with-overwrite-common</id>
-                            <phase>generate-resources</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${project.basedir}</outputDirectory>
-                                <overwrite>true</overwrite>
-                                <resources>
-                                    <resource>
-                                        <directory>${project.build.directory}/bmc-resources-unpack</directory>
-                                        <includes>
-                                            <include>.editorconfig</include>
-                                            <include>.gitignore</include>
-                                            <include>checkstyle.xml</include>
-                                            <include>.mvn/wrapper/*</include>
-                                            <include>mvnw</include>
-                                        </includes>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${source-plugin.version}</version>
+                    <version>${plugin.maven.source.version}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -403,6 +338,10 @@
         -->
         <plugins>
             <plugin>
+                <groupId>bmc.dev.resources.code</groupId>
+                <artifactId>bmc-resources</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
             </plugin>
@@ -412,19 +351,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
