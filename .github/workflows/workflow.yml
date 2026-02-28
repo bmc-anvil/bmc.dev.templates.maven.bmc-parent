@@ -15,7 +15,7 @@ on:
 
 jobs:
   build-test-publish:
-    uses: bmc-anvil/.github/.github/workflows/orchestrator_flow@main
+    uses: bmc-anvil/.github/.github/workflows/orchestrator_flow.yml@main
     secrets:
       PACKAGES_USER: ${{ secrets.PACKAGES_USER }}
       PACKAGES_TOKEN_RW: ${{ secrets.PACKAGES_TOKEN_RW }}
@@ -36,3 +36,4 @@ jobs:
       testing_options_skip: false
       versioning_semver_bump: 'patch'
       workflow_dry_run: false
+      versioning_version: ''
