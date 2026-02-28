@@ -25,15 +25,14 @@ jobs:
       packages: write
       security-events: write
     with:
-      inputs:
-        build_tool: 'maven' # options are {maven, Gradle, npm, sbt}. Only maven is valid. This is here as a proof for the abstraction.
-        build_type: 'artifact' # options are {artifact, docker_image_jvm, docker_image_graal_native, docker_image_graal_native_multiarch(?)}
-        java_vendor: 'oracle' # Supports: oracle, temurin and openjdk (via https://jdk.java.net/ download). Default: oracle
-        language: 'java' # options are {java, scala, Node.js, go}. Only java is valid. This is here as a proof for the abstraction.
-        language_version: '25'
-        services_docker_in_docker: false
-        static_analysis_checkstyle_skip: false
-        static_analysis_checkstyle_fail_on_violations: false
-        testing_options_skip: false
-        versioning_semver_bump: 'patch'
-        workflow_dry_run: false
+      build_tool: 'maven' # options are {maven, Gradle, npm, sbt}. Only maven is valid. This is here as a proof for the abstraction.
+      build_type: 'artifact' # options are {artifact, docker_image_jvm, docker_image_graal_native, docker_image_graal_native_multiarch(?)}
+      java_vendor: 'oracle' # Supports: oracle, temurin and openjdk (via https://jdk.java.net/ download). Default: oracle
+      language: 'java' # options are {java, scala, Node.js, go}. Only java is valid. This is here as a proof for the abstraction.
+      language_version: '25'
+      services_docker_in_docker: false
+      static_analysis_checkstyle_skip: false
+      static_analysis_checkstyle_fail_on_violations: false
+      testing_options_skip: false
+      versioning_semver_bump: 'patch'
+      workflow_dry_run: false
