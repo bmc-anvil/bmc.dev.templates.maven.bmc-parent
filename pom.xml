@@ -86,24 +86,24 @@
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.release>25</maven.compiler.release>
         <maven.compiler.proc>full</maven.compiler.proc>
-        <maven.min.version>3.9.9</maven.min.version>
+        <maven.min.version>3.9.12</maven.min.version>
 
         <!-- Plugins Versions  -->
         <plugin.bmc.resources>0.1.0</plugin.bmc.resources>
         <plugin.checkstyle.version>3.6.0</plugin.checkstyle.version>
-        <plugin.maven.compiler.version>3.14.0</plugin.maven.compiler.version>
+        <plugin.maven.compiler.version>3.15.0</plugin.maven.compiler.version>
         <plugin.maven.dependency.version>3.9.0</plugin.maven.dependency.version>
         <plugin.maven.deploy.version>3.1.4</plugin.maven.deploy.version>
         <plugin.maven.enforcer.version>3.6.2</plugin.maven.enforcer.version>
         <plugin.maven.failsafe.version>3.5.4</plugin.maven.failsafe.version>
-        <plugin.maven.jar.version>3.4.2</plugin.maven.jar.version>
+        <plugin.maven.jar.version>3.5.0</plugin.maven.jar.version>
         <plugin.maven.javadoc.version>3.12.0</plugin.maven.javadoc.version>
         <plugin.maven.resources.version>3.3.1</plugin.maven.resources.version>
-        <plugin.maven.source.version>3.3.1</plugin.maven.source.version>
+        <plugin.maven.source.version>3.4.0</plugin.maven.source.version>
         <plugin.maven.surefire.version>${plugin.maven.failsafe.version}</plugin.maven.surefire.version>
 
         <!-- Versions -->
-        <checkstyle.version>12.1.0</checkstyle.version>
+        <checkstyle.version>13.2.0</checkstyle.version>
     </properties>
 
     <!--
@@ -187,8 +187,6 @@
                         <outputFileFormat>sarif</outputFileFormat>
                         <excludeGeneratedSources>true</excludeGeneratedSources>
                         <includeTestSourceDirectory>true</includeTestSourceDirectory>
-                        <inputEncoding>UTF-8</inputEncoding>
-                        <outputEncoding>UTF-8</outputEncoding>
                         <consoleOutput>true</consoleOutput>
                         <linkXRef>false</linkXRef>
                     </configuration>
@@ -308,7 +306,6 @@
                             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                             <maven.home>${maven.home}</maven.home>
                         </systemPropertyVariables>
-                        <argLine>--add-opens java.base/java.lang=ALL-UNNAMED</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -398,6 +395,15 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                    </plugin>
+
+                    <!-- We will skip all tests and verifications for deployment as by the time we want to deploy, all must have been run already -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <skipITs>true</skipITs>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
