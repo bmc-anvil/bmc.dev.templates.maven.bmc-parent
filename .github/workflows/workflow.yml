@@ -27,6 +27,7 @@ jobs:
     with:
       build_tool: 'maven'
       build_type: 'artifact'
+      deploy_package: true
       java_vendor: 'oracle'
       language: 'java'
       language_version: '25'
