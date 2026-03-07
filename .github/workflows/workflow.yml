@@ -21,7 +21,7 @@ jobs:
       PACKAGES_TOKEN_RW: ${{ secrets.PACKAGES_TOKEN_RW }}
       GH_TOKEN: ${{ github.token }}
     permissions:
-      contents: read
+      contents: write
       packages: write
       security-events: write
     with:
