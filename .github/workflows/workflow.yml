@@ -34,5 +34,4 @@ jobs:
       static_analysis_checkstyle_skip: false
       static_analysis_checkstyle_fail_on_violations: false
       testing_options_skip: false
-      versioning_semver_bump: 'patch'
       workflow_dry_run: false
