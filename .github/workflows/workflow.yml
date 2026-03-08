@@ -7,11 +7,9 @@ on:
         required: false
         type: string
   push:
-    branches: [ "main" ]
-    tags:
-      - "*"
+    branches: [ '*' ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ 'main' ]
 
 jobs:
   build-test-publish:
