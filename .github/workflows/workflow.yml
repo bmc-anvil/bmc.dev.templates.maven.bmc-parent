@@ -2,8 +2,8 @@ name: build-test-publish
 on:
   workflow_dispatch:
     inputs:
-      tag_or_hash:
-        description: "Optionally specify a Git Tag or commit hash to deploy"
+      versioning_version:
+        description: "Manually specify a version. Main branch will validate semver version style. ie X.Y.Z, only numbers"
         required: false
         type: string
   push:
@@ -35,4 +35,5 @@ jobs:
       static_analysis_checkstyle_skip: false
       static_analysis_checkstyle_fail_on_violations: false
       testing_options_skip: false
+      versioning_version: ${{ github.event.inputs.versioning_version }}
       workflow_dry_run: false
