@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       versioning_version:
-        description: "Manually specify a version. Main branch will validate semver version style. ie X.Y.Z, only numbers"
+        description: "Manually specify a version. Main requires semver. Free form for other branches."
         required: false
         type: string
   push:
