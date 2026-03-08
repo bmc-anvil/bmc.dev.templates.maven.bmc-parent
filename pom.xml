@@ -89,7 +89,7 @@
         <maven.min.version>3.9.12</maven.min.version>
 
         <!-- Plugins Versions  -->
-        <plugin.bmc.resources>0.1.0</plugin.bmc.resources>
+        <plugin.bmc.resources>0.1.1</plugin.bmc.resources>
         <plugin.checkstyle.version>3.6.0</plugin.checkstyle.version>
         <plugin.maven.compiler.version>3.15.0</plugin.maven.compiler.version>
         <plugin.maven.dependency.version>3.9.0</plugin.maven.dependency.version>
